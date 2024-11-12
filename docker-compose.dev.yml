@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: . # Arahkan ke direktori root aplikasi
+      dockerfile: Dockerfile
+    container_name: nextjs_dev_app
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000" # Expose Next.js pada port 3000
+    volumes:
+      - .:/app # Sinkronisasi semua file dari host ke container
+      - /app/node_modules # Abaikan `node_modules` di host agar tidak menimpa container
+      - ./public/uploads:/app/public/uploads
+
+    # Agar aplikasi langsung restart saat terjadi perubahan
+    command: npm run dev
+
+  # Tambahkan layanan lain jika diperlukan, seperti database
